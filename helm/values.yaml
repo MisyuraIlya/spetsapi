@@ -1,0 +1,29 @@
+replicaCount: 1
+
+users:
+  image:
+    repository: spetsar/spetsapi-users
+    tag: latest
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 3000
+
+products:
+  image:
+    repository: spetsar/spetsapi-products
+    tag: latest
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 3000
+
+ingress:
+  enabled: true
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  hosts:
+    - host: myapp.local
+      paths:
+        - path: /users
+        - path: /products

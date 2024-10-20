@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-products
+  labels:
+    app: {{ .Release.Name }}-products
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-products
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-products
+    spec:
+      containers:
+        - name: products
+          image: "{{ .Values.products.image.repository }}:{{ .Values.products.image.tag }}"
+          ports:
+            - containerPort: {{ .Values.products.service.port }}
